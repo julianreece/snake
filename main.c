@@ -22,8 +22,9 @@ int main() {
 
     Game *game = malloc(sizeof(Game));
     Board *board = malloc(sizeof(Board));
+    Snake *snake = malloc(sizeof(Snake));
 
-    initialize(game, board, &boardsize);
+    initialize(game, board, snake, &boardsize);
 
     while (!is_over(game)) {
         process_input(game);
@@ -38,6 +39,39 @@ int main() {
 
     free(game);
     free(board);
+
+    // Queue *snake_queue = create_queue();
+    // Snake *snake = malloc(sizeof(Snake));
+
+    // snake->snake_queue = snake_queue;
+
+    // SnakePiece piece1 = {
+    //     1, 1, '#'
+    // };
+    // SnakePiece piece2 = {
+    //     1, 1, '@'
+    // };
+    // SnakePiece piece3 = {
+    //     1, 2, '%'
+    // };
+    // SnakePiece piece4 = {
+    //     1, 2, '$'
+    // };
+
+
+    // increase_length(snake, piece1);
+    // increase_length(snake, piece2);
+    // increase_length(snake, piece3);
+    // increase_length(snake, piece4);
+
+    // Node *temp = snake->snake_queue->front;
+    // while (temp != NULL) {
+    //     printf("{%d %d %c}\n", temp->data.x, temp->data.y, temp->data.icon);
+    //     temp = temp->next;
+    // }
+
+    // free(snake);
+    // free(snake_queue);
 
     return 0;
 }

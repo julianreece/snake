@@ -11,7 +11,14 @@ typedef enum {
     RIGHT
 } Direction;
 
-void increase_length(Queue *snake, SnakePiece piece);
-void decrease_length(Queue *snake);
+typedef struct {
+    Queue *snake_queue;
+    Direction curr_dir;
+} Snake;
+
+void increase_length(Snake *snake, SnakePiece piece);
+void decrease_length(Snake *snake);
+void change_direction(Snake *snake, Direction new_direction);
+SnakePiece next_head(Snake *snake, Direction direction);
 
 #endif

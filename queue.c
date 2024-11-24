@@ -16,6 +16,9 @@ Node *create_node(SnakePiece data) {
 
 Queue *create_queue() {
     Queue *queue = malloc(sizeof(Queue));
+    if (queue == NULL) {
+        exit(1);
+    }
 
     queue->front = queue->back = NULL;
     return queue;
