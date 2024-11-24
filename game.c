@@ -16,10 +16,31 @@ bool is_over(Game* game) {
     return game->game_over;
 }
 
-void update_state(Game *game) {
-    //
+void update_state(Game *game, BoardSize boardsize) {
+    int y, x;
+    get_empty_coordinate(game, &y, &x, &boardsize);
+
+    Model fruit = {
+        y,
+        x,
+        '@'
+    };
+
+    add_model(game, fruit);
 }
 
 void redraw(Game* game) {
     wrefresh(game->board->boardwin);
+}
+
+void add_model(Game *game, Model model) {
+    add_char_at(game->board, model.y, model.x, model.icon);
+}
+
+void get_empty_coordinate(Game *game, int *y, int *x, BoardSize *boardsize) {
+    srand(time(NULL));
+    do {
+        *y = rand() % boardsize->rows;
+        *x = rand() % boardsize->cols;
+    } while (mvwinch(game->board->boardwin, *y, *x) != ' ');
 }

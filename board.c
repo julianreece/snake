@@ -10,7 +10,7 @@ void add_border(Board* board) {
     box(board->boardwin, 0, 0);
 }
 
-void addCharAt(Board* board, int y, int x, chtype ch) {
+void add_char_at(Board* board, int y, int x, chtype ch) {
     mvwaddch(board->boardwin, y, x, ch);
 }
 

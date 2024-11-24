@@ -28,12 +28,10 @@ int main() {
     while (!is_over(game)) {
         process_input(game);
 
-        update_state(game);
+        update_state(game, boardsize);
 
         redraw(game);
     }
-
-    wrefresh(board->boardwin);
 
     getch();
     endwin();
