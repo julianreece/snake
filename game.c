@@ -20,7 +20,7 @@ void update_state(Game *game, BoardSize boardsize) {
     int y, x;
     get_empty_coordinate(game, &y, &x, &boardsize);
 
-    Model fruit = {
+    Fruit fruit = {
         y,
         x,
         '@'
@@ -33,7 +33,7 @@ void redraw(Game* game) {
     wrefresh(game->board->boardwin);
 }
 
-void add_model(Game *game, Model model) {
+void add_model(Game *game, Fruit model) {
     add_char_at(game->board, model.y, model.x, model.icon);
 }
 

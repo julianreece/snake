@@ -8,6 +8,6 @@ typedef struct {
     int y;
     int x;
     chtype icon;
-} Model;
+} Fruit;
 
 #endif

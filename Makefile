@@ -4,7 +4,7 @@ CFLAGS=-lncurses
 
 OBJ_DIR=objs
 
-SRC=main.c board.c game.c
+SRC=main.c board.c game.c queue.c snake.c
 OBJ=$(SRC:%.c=$(OBJ_DIR)/%.o)
 
 TARGET=main
