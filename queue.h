@@ -27,5 +27,7 @@ int is_empty(Queue *queue);
 void queue_enqueue(Queue *queue, SnakePiece data);
 SnakePiece queue_dequeue(Queue *queue);
 SnakePiece peek(Queue *queue);
+SnakePiece tail(Queue *snake);
+SnakePiece head(Queue *snake);
 
 #endif

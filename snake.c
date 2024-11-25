@@ -14,8 +14,8 @@ void change_direction(Snake *snake, Direction new_direction) {
 }
 
 SnakePiece next_head(Snake *snake, Direction direction) {
-    int row = snake->snake_queue->front->data.x;
-    int col = snake->snake_queue->front->data.y;
+    int row = head(snake->snake_queue).y;
+    int col = head(snake->snake_queue).x;
 
     switch (direction) {
         case UP:
@@ -31,7 +31,6 @@ SnakePiece next_head(Snake *snake, Direction direction) {
             col++;
             break;
         default:
-            // ?? should never get here
             exit(1);
             break;
     }
@@ -44,3 +43,7 @@ SnakePiece next_head(Snake *snake, Direction direction) {
     
     return new_piece;
 }
+
+// void add_piece(Snake *snake, SnakePiece piece) {
+//     increase_length(snake, piece);
+// }

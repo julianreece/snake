@@ -17,3 +17,7 @@ void add_char_at(Board* board, int y, int x, chtype ch) {
 chtype get_input(Board* board) {
     return wgetch(board->boardwin);
 }
+
+chtype get_char_at(Board* board, int y, int x) {
+    return mvwinch(board->boardwin, y, x);
+}

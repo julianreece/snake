@@ -24,12 +24,14 @@ int main() {
     Board *board = malloc(sizeof(Board));
     Snake *snake = malloc(sizeof(Snake));
 
-    initialize(game, board, snake, &boardsize);
+    initialize(game, board, &snake, &boardsize);
 
     while (!is_over(game)) {
-        process_input(game);
+        wtimeout(game->board->boardwin, 500);
+        
+        process_input(game, &snake);
 
-        update_state(game, boardsize);
+        update_state(game, &snake, boardsize);
 
         redraw(game);
     }
@@ -39,6 +41,15 @@ int main() {
 
     free(game);
     free(board);
+    
+    Node *temp = snake->snake_queue->front;
+    while (temp != NULL) {
+        printf("{%d %d %c} -> ", temp->data.x, temp->data.y, temp->data.icon);
+        temp = temp->next;
+    }
+    printf("NULL\n");
+    free(snake->snake_queue);
+    free(snake);
 
     // Queue *snake_queue = create_queue();
     // Snake *snake = malloc(sizeof(Snake));
@@ -64,11 +75,13 @@ int main() {
     // increase_length(snake, piece3);
     // increase_length(snake, piece4);
 
-    // Node *temp = snake->snake_queue->front;
-    // while (temp != NULL) {
-    //     printf("{%d %d %c}\n", temp->data.x, temp->data.y, temp->data.icon);
-    //     temp = temp->next;
-    // }
+    // // Node *temp = snake->snake_queue->front;
+    // // while (temp != NULL) {
+    // //     printf("{%d %d %c}\n", temp->data.x, temp->data.y, temp->data.icon);
+    // //     temp = temp->next;
+    // // }
+
+    // printf("%d\n", peek(snake->snake_queue));
 
     // free(snake);
     // free(snake_queue);

@@ -28,6 +28,9 @@ int is_empty(Queue *queue) {
     return queue->front == NULL;
 }
 
+/**
+ * adds item to queue
+ */
 void queue_enqueue(Queue *queue, SnakePiece data) {
     Node *node = create_node(data);
     if (!node) {
@@ -44,6 +47,9 @@ void queue_enqueue(Queue *queue, SnakePiece data) {
     queue->back = node;
 }   
 
+/**
+ * removes item from queue 
+ */
 SnakePiece queue_dequeue(Queue *queue) {
     if (is_empty(queue)) {
         // queue underflow
@@ -52,6 +58,7 @@ SnakePiece queue_dequeue(Queue *queue) {
         };
         return null;
     }
+
     SnakePiece head_data = queue->front->data;
     queue->front = queue->front->next;
 
@@ -63,6 +70,9 @@ SnakePiece queue_dequeue(Queue *queue) {
     return data;
 }
 
+/**
+ * returns front element 
+ */
 SnakePiece peek(Queue *queue) {
     if (is_empty(queue)) {
         SnakePiece null = {
@@ -72,4 +82,12 @@ SnakePiece peek(Queue *queue) {
     }
 
     return queue->front->data;
+}
+
+SnakePiece tail(Queue *queue) {
+    return queue->front->data;
+}
+
+SnakePiece head(Queue *queue) {
+    return queue->back->data;
 }
