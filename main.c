@@ -13,6 +13,8 @@ int main() {
 
     noecho();
 
+    curs_set(0);
+
     BoardSize boardsize = {
         getmaxy(stdscr),
         getmaxx(stdscr),
@@ -28,7 +30,7 @@ int main() {
 
     while (!is_over(game)) {
         wtimeout(game->board->boardwin, 500);
-        
+
         process_input(game, &snake);
 
         update_state(game, &snake, boardsize);
