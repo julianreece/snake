@@ -23,5 +23,6 @@ void add_border(Board* board);
 void add_char_at(Board* board, int y, int x, chtype ch);
 chtype get_input(Board* board);
 chtype get_char_at(Board* board, int y, int x);
+void add_empty(Board* board, int y, int x);
 
 #endif

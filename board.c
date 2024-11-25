@@ -21,3 +21,7 @@ chtype get_input(Board* board) {
 chtype get_char_at(Board* board, int y, int x) {
     return mvwinch(board->boardwin, y, x);
 }
+
+void add_empty(Board* board, int y, int x) {
+    add_char_at(board, y, x, ' ');
+}

@@ -85,9 +85,21 @@ SnakePiece peek(Queue *queue) {
 }
 
 SnakePiece tail(Queue *queue) {
+    if (is_empty(queue)) {
+        SnakePiece null = {
+            -1, -1, -1
+        };
+        return null;
+    }
     return queue->front->data;
 }
 
 SnakePiece head(Queue *queue) {
+    if (is_empty(queue)) {
+        SnakePiece null = {
+            -1, -1, -1
+        };
+        return null;
+    }
     return queue->back->data;
 }
