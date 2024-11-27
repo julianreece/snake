@@ -43,7 +43,3 @@ SnakePiece next_head(Snake *snake, Direction direction) {
     
     return new_piece;
 }
-
-// void add_piece(Snake *snake, SnakePiece piece) {
-//     increase_length(snake, piece);
-// }

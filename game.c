@@ -1,11 +1,14 @@
 
 #include "game.h"
 
-void initialize(Game *game, Board *board, Snake **snake, BoardSize *boardsize) {
+void initialize(Game *game, Board *board, Snake **snake, Fruit **fruit, BoardSize *boardsize) {
     board->boardwin = newwin(boardsize->rows, boardsize->cols, (boardsize->y_max/2)-(boardsize->rows/2), (boardsize->x_max/2)-(boardsize->cols/2));
     game->board = board;
     game->game_over = false;
     game->score = 0;
+
+    int y, x;   
+    get_empty_coordinate(game, &y, &x, boardsize);  
 
     keypad(game->board->boardwin, true);
     add_border(game->board);
@@ -16,6 +19,7 @@ void initialize(Game *game, Board *board, Snake **snake, BoardSize *boardsize) {
     SnakePiece head = {
         5, 5, '#'
     };
+
     add_char_at(board, head.y, head.x, head.icon);
     increase_length((*snake), head);
 
@@ -26,6 +30,12 @@ void initialize(Game *game, Board *board, Snake **snake, BoardSize *boardsize) {
     head = next_head((*snake), RIGHT);
     add_char_at(board, head.y, head.x, head.icon);
     increase_length((*snake), head);
+
+    get_empty_coordinate(game, &y, &x, boardsize);
+    (*fruit)->y = y;
+    (*fruit)->x = x;
+
+    add_fruit(game, fruit);
 }
 
 void process_input(Game *game, Snake **snake) {
@@ -54,11 +64,23 @@ bool is_over(Game* game) {
     return game->game_over;
 }
 
-void update_state(Game *game, Snake **snake, BoardSize boardsize) {
-    // int y, x;   
-    // get_empty_coordinate(game, &y, &x, &boardsize);    
-
+void update_state(Game *game, Snake **snake, Fruit **fruit, BoardSize boardsize) {  
     SnakePiece next = next_head((*snake), (*snake)->curr_dir);
+
+    // if (next.y != (*fruit)->y || next.x != (*fruit)->x) {
+    //     int empty_row = tail((*snake)->snake_queue).y;
+    //     int empty_col = tail((*snake)->snake_queue).x;
+    //     add_empty(game->board, empty_row, empty_col);
+    //     decrease_length((*snake));
+    // } else {
+    //     int y, x;   
+    //     get_empty_coordinate(game, &y, &x, &boardsize); 
+    //     (*fruit)->y = y;
+    //     (*fruit)->x = x;
+
+    //     add_fruit(game, &(*fruit));
+    //     game->score++;
+    // }
 
     switch (get_char_at(game->board, next.y, next.x)) {
         case ' ': {
@@ -66,32 +88,29 @@ void update_state(Game *game, Snake **snake, BoardSize boardsize) {
             int empty_col = tail((*snake)->snake_queue).x;
             add_empty(game->board, empty_row, empty_col);
             decrease_length((*snake));
-
-            add_char_at(game->board, next.y, next.x, '#');
-            increase_length((*snake), next);
             break;
         }
-            
         case '@': {
             game->score++;
+            int y, x;
+            get_empty_coordinate(game, &y, &x, &boardsize);
+            (*fruit)->y = y;
+            (*fruit)->x = x;
+            add_fruit(game, &(*fruit));
             break;
         }
-        default: {
+        default:
             game->game_over = true;
-            mvwprintw(game->board->boardwin, 1, 1, "GAME OVER");
             break;
-        }
-            
     }
+
+    add_char_at(game->board, next.y, next.x, '#');
+    increase_length((*snake), next);
 }
 
 void redraw(Game* game) {
     wrefresh(game->board->boardwin);
 }
-
-// void add_model(Game *game, Fruit model) {
-//     add_char_at(game->board, model.y, model.x, model.icon);
-// }
 
 void get_empty_coordinate(Game *game, int *y, int *x, BoardSize *boardsize) {
     srand(time(NULL));
@@ -99,4 +118,8 @@ void get_empty_coordinate(Game *game, int *y, int *x, BoardSize *boardsize) {
         *y = rand() % boardsize->rows;
         *x = rand() % boardsize->cols;
     } while (mvwinch(game->board->boardwin, *y, *x) != ' ');
+}
+
+void add_fruit(Game *game, Fruit **fruit) {
+    add_char_at(game->board, (*fruit)->y, (*fruit)->x, '@');
 }
