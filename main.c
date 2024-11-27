@@ -10,6 +10,13 @@
 int main() {
 
     initscr();
+    start_color();
+
+    if (!has_colors()) {
+        printf("ERROR: Colors not supported\n");
+        return -1;
+    }
+
     refresh();
 
     noecho();
