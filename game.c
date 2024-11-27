@@ -69,10 +69,8 @@ void update_state(Game *game, Snake *snake, Fruit *fruit, BoardSize *boardsize) 
             break;
         }
         case '@': {
-            game->score++;
-
             draw_fruit(game, fruit, boardsize);
-            
+            game->score++;
             break;
         }
         default:

@@ -12,11 +12,6 @@ int main() {
     initscr();
     start_color();
 
-    if (!has_colors()) {
-        printf("ERROR: Colors not supported\n");
-        return -1;
-    }
-
     refresh();
 
     noecho();
@@ -29,35 +24,28 @@ int main() {
         BOARD_ROWS,
         BOARD_COLS
     };
+    Game game;
+    Board board;
+    Snake snake;
+    Fruit fruit;
 
-    Game *game = malloc(sizeof(Game));
-    Board *board = malloc(sizeof(Board));
-    Snake *snake = malloc(sizeof(Snake));
-    Fruit *fruit = malloc(sizeof(Fruit));
+    initialize(&game, &board, &snake, &fruit, &boardsize);
 
-    initialize(game, board, snake, fruit, &boardsize);
+    while (!is_over(&game)) {
+        wtimeout(game.board->boardwin, 500);
 
-    while (!is_over(game)) {
-        wtimeout(game->board->boardwin, 500);
+        process_input(&game, &snake);
 
-        process_input(game, snake);
+        update_state(&game, &snake, &fruit, &boardsize);
 
-        update_state(game, snake, fruit, &boardsize);
-
-        redraw(game);
+        redraw(&game);
     }
 
-    mvwprintw(game->board->boardwin, 5, 5, "GAME OVER");
-    mvwprintw(game->board->boardwin, 10, 5, "Score: %d", game->score);
+    mvwprintw(game.board->boardwin, 5, 5, "GAME OVER");
+    mvwprintw(game.board->boardwin, 6, 5, "Score: %d", game.score);
 
-    wgetch(game->board->boardwin);
+    wgetch(game.board->boardwin);
     endwin();
-
-    free(game);
-    free(board);
-    free(fruit);
-    free(snake->snake_queue);
-    free(snake);
 
     return 0;
 }
