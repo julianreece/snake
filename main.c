@@ -47,5 +47,7 @@ int main() {
     wgetch(game.board->boardwin);
     endwin();
 
+    free(snake.snake_queue);
+
     return 0;
 }
