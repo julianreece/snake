@@ -35,14 +35,14 @@ int main() {
     Snake *snake = malloc(sizeof(Snake));
     Fruit *fruit = malloc(sizeof(Fruit));
 
-    initialize(game, board, &snake, &fruit, &boardsize);
+    initialize(game, board, snake, fruit, &boardsize);
 
     while (!is_over(game)) {
         wtimeout(game->board->boardwin, 500);
 
-        process_input(game, &snake);
+        process_input(game, snake);
 
-        update_state(game, &snake, &fruit, boardsize);
+        update_state(game, snake, fruit, &boardsize);
 
         redraw(game);
     }
