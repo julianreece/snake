@@ -3,14 +3,19 @@
 #include "game.h"
 #include "fruit.h"
 
-#define BOARD_DIM 20
-#define BOARD_ROWS BOARD_DIM
-#define BOARD_COLS BOARD_DIM * 2.5
-
 int main() {
 
     initscr();
     start_color();
+
+    if (!has_colors()) {
+        printf("ERROR: Color not supported\n");
+        endwin();
+        return -1;
+    }
+
+    init_pair(1, COLOR_GREEN, COLOR_GREEN);
+    init_pair(2, COLOR_RED, COLOR_RED);
 
     refresh();
 
@@ -21,8 +26,8 @@ int main() {
     BoardSize boardsize = {
         getmaxy(stdscr),
         getmaxx(stdscr),
-        BOARD_ROWS,
-        BOARD_COLS
+        20, // height
+        50 // width
     };
     Game game;
     Board board;

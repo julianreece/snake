@@ -13,6 +13,8 @@ void initialize(Game *game, Board *board, Snake *snake, Fruit *fruit, BoardSize 
     snake->snake_queue = create_queue();
     change_direction(snake, RIGHT);
 
+    wattron(game->board->boardwin, COLOR_PAIR(1));
+
     SnakePiece head = {
         5, 5, '#'
     };
@@ -28,7 +30,10 @@ void initialize(Game *game, Board *board, Snake *snake, Fruit *fruit, BoardSize 
     add_char_at(board, head.y, head.x, head.icon);
     increase_length(snake, head);
 
+    wattroff(game->board->boardwin, COLOR_PAIR(1));
+    wattron(game->board->boardwin, COLOR_PAIR(2));
     draw_fruit(game, fruit, boardsize);
+    wattroff(game->board->boardwin, COLOR_PAIR(2));
 }
 
 void process_input(Game *game, Snake *snake) {
@@ -57,7 +62,7 @@ bool is_over(Game* game) {
     return game->game_over;
 }
 
-void update_state(Game *game, Snake *snake, Fruit *fruit, BoardSize *boardsize) {  
+void update_state(Game *game, Snake *snake, Fruit *fruit, BoardSize *boardsize) {
     SnakePiece next = next_head(snake, snake->curr_dir);
 
     switch (get_char_at(game->board, next.y, next.x)) {
@@ -68,8 +73,10 @@ void update_state(Game *game, Snake *snake, Fruit *fruit, BoardSize *boardsize) 
             decrease_length(snake);
             break;
         }
-        case '@': {
+        case 512 + '@': { // 
+            wattron(game->board->boardwin, COLOR_PAIR(2));
             draw_fruit(game, fruit, boardsize);
+            wattroff(game->board->boardwin, COLOR_PAIR(2));
             game->score++;
             break;
         }
@@ -77,9 +84,10 @@ void update_state(Game *game, Snake *snake, Fruit *fruit, BoardSize *boardsize) 
             game->game_over = true;
             break;
     }
-
+    wattron(game->board->boardwin, COLOR_PAIR(1));
     add_char_at(game->board, next.y, next.x, '#');
     increase_length(snake, next);
+    wattroff(game->board->boardwin, COLOR_PAIR(1));
 }
 
 void redraw(Game* game) {
