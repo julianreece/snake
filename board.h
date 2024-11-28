@@ -18,11 +18,11 @@ typedef struct {
     WINDOW* boardwin;
 } Board;
 
-void clear_win(Board* board);
-void add_border(Board* board);
-void add_char_at(Board* board, int y, int x, chtype ch);
-chtype get_input(Board* board);
-chtype get_char_at(Board* board, int y, int x);
-void add_empty(Board* board, int y, int x);
+void clear_win(WINDOW* win);
+void add_border(WINDOW* win);
+void add_char_at(WINDOW* win, int y, int x, chtype ch);
+chtype get_input(WINDOW* win);
+chtype get_char_at(WINDOW* win, int y, int x);
+void add_empty(WINDOW* win, int y, int x);
 
 #endif

@@ -14,8 +14,8 @@ int main() {
         return -1;
     }
 
-    init_pair(1, COLOR_GREEN, COLOR_GREEN);
-    init_pair(2, COLOR_RED, COLOR_RED);
+    init_pair(1, COLOR_GREEN, COLOR_GREEN); /* snake color */
+    init_pair(2, COLOR_RED, COLOR_RED); /* fruit color */
 
     refresh();
 
@@ -37,7 +37,7 @@ int main() {
     initialize(&game, &board, &snake, &fruit, &boardsize);
 
     while (!is_over(&game)) {
-        wtimeout(game.board->boardwin, 500);
+        wtimeout(game.board->boardwin, game.delay);
 
         process_input(&game, &snake);
 

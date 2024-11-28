@@ -13,6 +13,7 @@
 typedef struct {
     Board *board;
     int game_over;
+    int delay;
     int score;
 } Game;
 
