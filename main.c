@@ -4,6 +4,22 @@
 #include "fruit.h"
 
 int main() {
+    FILE* highscore_file = fopen("highscores.txt", "r");
+    if (highscore_file == NULL) {
+        printf("ERROR: Could not open file\n");
+        return -1;
+    }
+
+    int highscore; 
+    fscanf(highscore_file, "%d", &highscore);
+    freopen("highscores.txt", "w", highscore_file);
+
+    if (highscore_file == NULL) {
+        printf("ERROR: Could not reopen file\n");
+        return -1;
+    }
+
+    printf("Loaded highscore: %d\n", highscore);
 
     initscr();
     start_color();
@@ -51,6 +67,18 @@ int main() {
 
     wgetch(game.board->boardwin);
     endwin();
+
+    printf("Score: %d\n", game.score);
+    if (game.score > highscore) {
+        highscore = game.score;
+        fprintf(highscore_file, "%d", highscore);
+        printf("NEW HIGH SCORE: %d\n", highscore);
+    } else {
+        // print old highscore
+        fprintf(highscore_file, "%d", highscore);
+    }
+
+    fclose(highscore_file);
 
     free(snake.snake_queue);
 
